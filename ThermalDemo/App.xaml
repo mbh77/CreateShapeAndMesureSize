@@ -1,0 +1,42 @@
+﻿<prism:PrismApplication x:Class="ThermalDemo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ThermalDemo"
+             xmlns:prism="http://prismlibrary.com/">
+    <Application.Resources>
+        <!--아래 스타일만 있을 때 리소스에 추가되지 않는 문제가 보고되어 있습니다. 문제 해결을 위해 사용하지 않는 리소스를 추가-->
+        <SolidColorBrush x:Key="Dummy" Color="Blue" />
+        <!--아래 스타일만 있을 때 리소스에 추가되지 않는 문제가 보고되어 있습니다. 문제 해결을 위해 사용하지 않는 리소스를 추가-->
+        
+        <Style x:Key="EllipseThumbStyle" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Ellipse Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BodyThumbStyle" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Stroke="{TemplateBinding Foreground}" StrokeThickness="2" StrokeDashArray="3,2" Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ExpanderBottomThumbStyle" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Application.Resources>
+</prism:PrismApplication>

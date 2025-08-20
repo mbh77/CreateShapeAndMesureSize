@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="ThermalDemo.Main.Views.TopMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Menu>
+            <MenuItem Header="파일">
+                <MenuItem Header="파일 열기" Command="{Binding OpenFileCommand}" />
+                <MenuItem Header="재생" />
+                <MenuItem Header="멈춤" />
+                <!--<MenuItem Header="파일 닫기" Command="{Binding CloseFileCommand}" />-->
+            </MenuItem>
+            <MenuItem Header="측정">
+                <MenuItem Header="라인" Command="{Binding DrawLineCommand}" />
+                <MenuItem Header="사각형" Command="{Binding DrawBoxCommand}"/>
+                <MenuItem Header="타원" Command="{Binding DrawEllipseCommand}"/>
+                <MenuItem Header="선택" Command="{Binding SelectShapeCommand}"/>
+            </MenuItem>
+        </Menu>
+    </Grid>
+</UserControl>

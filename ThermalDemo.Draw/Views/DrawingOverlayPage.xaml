@@ -1,0 +1,191 @@
+﻿<UserControl x:Class="ThermalDemo.Draw.Views.DrawingOverlayPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:customShape="clr-namespace:Petzold.Media2D;assembly=CustomShapes"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+    </UserControl.Resources>
+    <Grid ClipToBounds="True" x:Name="DrawingOverlayGrid">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <prism:InvokeCommandAction Command="{Binding GridLoadedCmd}" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="KeyDown">
+                <prism:InvokeCommandAction Command="{Binding KeyDownCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+        <Canvas x:Name="DragPreviewCanvas">
+            <customShape:ArrowLine x:Name="ArrowLIne" X1="{Binding DragLine.X1}" Y1="{Binding DragLine.Y1}" X2="{Binding DragLine.X2}" Y2="{Binding DragLine.Y2}" >
+                <customShape:ArrowLine.ArrowEnds>Both</customShape:ArrowLine.ArrowEnds>
+                <customShape:ArrowLine.ArrowAngle>180</customShape:ArrowLine.ArrowAngle>
+                <customShape:ArrowLine.Stroke>
+                    <Binding Path="Stroke" />
+                </customShape:ArrowLine.Stroke>
+                <customShape:ArrowLine.StrokeThickness>1.5</customShape:ArrowLine.StrokeThickness>
+                <customShape:ArrowLine.StrokeDashArray>2, 3</customShape:ArrowLine.StrokeDashArray>
+            </customShape:ArrowLine>
+            <Rectangle Canvas.Left="{Binding DragBox.Left}" Canvas.Top="{Binding DragBox.Top}" Width="{Binding DragBox.Width}" Height="{Binding DragBox.Height}" >
+                <Rectangle.StrokeThickness>1.5</Rectangle.StrokeThickness>
+                <Rectangle.Stroke>
+                    <Binding Path="Stroke" />
+                </Rectangle.Stroke>
+                <Rectangle.StrokeDashArray>2, 3</Rectangle.StrokeDashArray>
+            </Rectangle>
+            <Ellipse Canvas.Left="{Binding DragEllipse.Left}" Canvas.Top="{Binding DragEllipse.Top}" Width="{Binding DragEllipse.Width}" Height="{Binding DragEllipse.Height}">
+                <Ellipse.StrokeThickness>1.5</Ellipse.StrokeThickness>
+                <Ellipse.Stroke>
+                    <Binding Path="Stroke" />
+                </Ellipse.Stroke>
+                <Ellipse.StrokeDashArray>2,3</Ellipse.StrokeDashArray>
+            </Ellipse>
+        </Canvas>
+        <AdornerDecorator>
+            <Canvas x:Name="DrawingCanvas" Background="Transparent">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <prism:InvokeCommandAction Command="{Binding CanvasLButtonDownCmd}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <prism:InvokeCommandAction Command="{Binding CanvasLButtonUpCmd}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                        <prism:InvokeCommandAction Command="{Binding CanvasMouseMoveCmd}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="SizeChanged">
+                        <prism:InvokeCommandAction Command="{Binding CanvasSizeChangedCmd}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <ItemsControl x:Name="LineItems" ItemsSource="{Binding Lines}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <prism:InvokeCommandAction Command="{Binding ItemsControlLoadedCmd}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas x:Name="LineCanvas" Background="Transparent"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <Grid Canvas.Left="{Binding LabelLeftTop.X}" Canvas.Top="{Binding LabelLeftTop.Y}" Width="{Binding TextLength}">
+                                    <Grid.Height>25</Grid.Height>
+                                    <Grid.RenderTransform>
+                                        <RotateTransform  Angle="{Binding Path=LabelAngle}"/>
+                                    </Grid.RenderTransform>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding RealLength}">
+                                        <TextBlock.FontFamily>
+                                            <Binding Path="TextFont" />
+                                        </TextBlock.FontFamily>
+                                        <TextBlock.FontSize>
+                                            <Binding Path="FontSize"/>
+                                        </TextBlock.FontSize>
+                                        <TextBlock.Foreground>
+                                            <Binding Path="Stroke" />
+                                        </TextBlock.Foreground>
+                                        <TextBlock.TextAlignment>Center</TextBlock.TextAlignment>
+                                <!--<TextBlock.Background>
+                                    <SolidColorBrush Opacity="0.3" Color="Blue"/>
+                                </TextBlock.Background>-->
+                                    </TextBlock>
+                                </Grid>
+                                <customShape:ArrowLine Name="FindMe" Uid="{Binding Key}" Fill="Transparent" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="{Binding Stroke}" StrokeThickness="1.5">
+                                    <customShape:ArrowLine.ArrowEnds>Both</customShape:ArrowLine.ArrowEnds>
+                                    <customShape:ArrowLine.ArrowAngle>180</customShape:ArrowLine.ArrowAngle>
+                                </customShape:ArrowLine>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl x:Name="BoxItems" ItemsSource="{Binding Boxes}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <prism:InvokeCommandAction Command="{Binding ItemsControlLoadedCmd}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas x:Name="BoxCanvas" Background="Transparent"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:Name="BoxDataTemplate">
+                            <Canvas x:Name="testttttt">
+                                <Grid Canvas.Left="{Binding Left}" Canvas.Top="{Binding Top}" Width="{Binding Width}" Height="{Binding Height}">
+                                    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding RealArea}" >
+                                        <TextBlock.Foreground>
+                                            <Binding Path="Stroke" />
+                                        </TextBlock.Foreground>
+                                        <TextBlock.TextAlignment>Center</TextBlock.TextAlignment>
+                                <!--<TextBlock.Background>
+                                    <SolidColorBrush Opacity="0.3" Color="Blue"/>
+                                </TextBlock.Background>-->
+                                    </TextBlock>
+                                    <Grid.RenderTransform>
+                                        <RotateTransform Angle="{Binding Angle}" CenterX="{Binding CenterX}" CenterY="{Binding CenterY}" />
+                                    </Grid.RenderTransform>
+                                </Grid>
+                                <Rectangle Name="FindMe" Uid="{Binding Key}" Fill="Transparent" Canvas.Left="{Binding Left}" Canvas.Top="{Binding Top}" Width="{Binding Width}" Height="{Binding Height}">
+                                    <Rectangle.StrokeThickness>1.5</Rectangle.StrokeThickness>
+                                    <Rectangle.Stroke>
+                                        <Binding Path="Stroke" />
+                                    </Rectangle.Stroke>
+                                    <Rectangle.RenderTransform>
+                                        <RotateTransform Angle="{Binding Angle}" CenterX="{Binding CenterX}" CenterY="{Binding CenterY}" />
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl x:Name="EllipseItems" ItemsSource="{Binding Ellipses}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <prism:InvokeCommandAction Command="{Binding ItemsControlLoadedCmd}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas x:Name="EllipseCanvas" Background="Transparent"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Canvas>
+                                <Grid Canvas.Left="{Binding Left}" Canvas.Top="{Binding Top}" Width="{Binding Width}">
+                                    <Grid.Height>25</Grid.Height>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding RealArea}" >
+                                        <TextBlock.Foreground>
+                                            <Binding Path="Stroke" />
+                                        </TextBlock.Foreground>
+                                        <TextBlock.TextAlignment>Center</TextBlock.TextAlignment>
+                                <!--<TextBlock.Background>
+                                    <SolidColorBrush Opacity="0.3" Color="Blue"/>
+                                </TextBlock.Background>-->
+                                    </TextBlock>
+                                    <Grid.RenderTransform>
+                                        <RotateTransform Angle="{Binding Angle}" CenterX="{Binding CenterX}" CenterY="{Binding CenterY}" />
+                                    </Grid.RenderTransform>
+                                </Grid>
+                                <Ellipse Uid="{Binding Key}" Fill="Transparent" Canvas.Left="{Binding Left}" Canvas.Top="{Binding Top}" Width="{Binding Width}" Height="{Binding Height}">
+                                    <Ellipse.StrokeThickness>1.5</Ellipse.StrokeThickness>
+                                    <Ellipse.Stroke>
+                                        <Binding Path="Stroke" />
+                                    </Ellipse.Stroke>
+                                    <Ellipse.RenderTransform>
+                                        <RotateTransform Angle="{Binding Angle}" CenterX="{Binding CenterX}" CenterY="{Binding CenterY}" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Canvas>
+        </AdornerDecorator>
+     </Grid>
+</UserControl>

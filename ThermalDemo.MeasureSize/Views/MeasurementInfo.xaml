@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="ThermalDemo.MeasureSize.Views.MeasurementInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" >
+    <Grid Background="SkyBlue">
+        <StackPanel >
+            <Label Content="✔ 10mm가 100pixel과 일치하는 거리" />
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Right" Width="50" Content="RL :" />
+                <TextBox  VerticalAlignment="Center" HorizontalContentAlignment="Right" Width="200" Margin="0,0,1,0" Text="{Binding LR}" />
+                <TextBlock VerticalAlignment="Center"  Text="mm"/>
+            </StackPanel>
+            <Label Content="✔ 거리별 픽셀 길이 구하기 상수 값 (0.1÷RL)" Margin="0,5,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Right" Width="50" Content="tan(θ) :" />
+                <TextBox IsReadOnly="True" VerticalAlignment="Center" HorizontalContentAlignment="Right" Background="LightGray" Width="200" Text="{Binding LengthRatioConst}" Margin="0,0,1,0"/>
+            </StackPanel>
+            <Label Content="✔ 현재 사진이 촬영된 거리" Margin="0,5,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Right" Width="50" Content="d :" />
+                <TextBox VerticalAlignment="Center" HorizontalContentAlignment="Right" Width="200" Margin="0,0,1,0" Text="{Binding ShootingDistance}"/>
+                <TextBlock VerticalAlignment="Center"  Text="mm"/>
+            </StackPanel>
+            <Button HorizontalAlignment="Right" Width="100" Margin="3,0,10,3" Content="사전 조건 적용" Command="{Binding ApplyPreconditionCmd}" />
+            <Separator Margin="0,10,0,0" BorderThickness="1" BorderBrush="DarkSlateGray"/>
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Right" Width="70" Content="픽셀길이:" />
+                <TextBox IsReadOnly="True" VerticalAlignment="Center" HorizontalContentAlignment="Right" Background="LightGray" Width="180" Margin="0,0,1,0" Text="{Binding LengthOfPixel}"/>
+                <TextBlock VerticalAlignment="Center"  Text="mm"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Right" Width="70" Content="사진크기:" />
+                <TextBox IsReadOnly="True" VerticalAlignment="Center" Background="LightGray" HorizontalContentAlignment="Right" Width="70" Margin="0,0,1,0" Text="{Binding ImageWidth}"/>
+                <TextBlock VerticalAlignment="Center"  Text=" X "/>
+                <TextBox IsReadOnly="True" VerticalAlignment="Center" Background="LightGray" HorizontalContentAlignment="Right" Width="70" Margin="0,0,1,0" Text="{Binding ImageHeight}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label HorizontalContentAlignment="Right" Width="70" Content="화면크기:" />
+                <TextBox IsReadOnly="True" VerticalAlignment="Center" Background="LightGray" HorizontalContentAlignment="Right" Width="70" Margin="0,0,1,0" Text="{Binding CanvasWidth}"/>
+                <TextBlock VerticalAlignment="Center"  Text=" X "/>
+                <TextBox IsReadOnly="True" VerticalAlignment="Center" Background="LightGray" HorizontalContentAlignment="Right" Width="70" Margin="0,0,1,0" Text="{Binding CanvasHeight}"/>
+            </StackPanel>            
+        </StackPanel>           
+    </Grid>
+</UserControl>

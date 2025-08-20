@@ -1,0 +1,44 @@
+﻿<Window x:Class="ThermalDemo.Main.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        Title="Thermal Determine Length Demo"
+        MinWidth="640" MinHeight="480"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Activated="Window_Activated">
+    <Window.Resources>
+ 
+    </Window.Resources>
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <Border Panel.ZIndex="3" DockPanel.Dock="Top" BorderBrush="DarkSlateGray" BorderThickness="0,1,0,1">
+                <ContentControl  prism:RegionManager.RegionName="TopMenuRegion"/>
+            </Border>
+            <Border Panel.ZIndex="3" DockPanel.Dock="Left" BorderBrush="DarkSlateGray" BorderThickness="0,0,1,0">
+                <Grid Width="300">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="DarkSlateGray">
+                        <ContentControl prism:RegionManager.RegionName="LeftMenuRegion"/>
+                    </Border>
+                    <Border Grid.Row="1">
+                        <ContentControl prism:RegionManager.RegionName="OptionRegion"/>
+                    </Border>
+                    <Border Grid.Row="2">
+                        <Grid Width="Auto">
+                            <ContentControl Panel.ZIndex="1" prism:RegionManager.RegionName="MediaContentRegion" />
+                            <ContentControl Panel.ZIndex="2" prism:RegionManager.RegionName="DrawRegion" />
+                        </Grid>
+                    </Border>                    
+                </Grid>
+            </Border>
+            <Grid Width="Auto">
+                <ContentControl Panel.ZIndex="1" prism:RegionManager.RegionName="ImagesRegion" />
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

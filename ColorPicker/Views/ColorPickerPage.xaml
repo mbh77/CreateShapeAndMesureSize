@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="ColorPicker.Views.ColorPickerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"     
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid Background="SkyBlue">
+        <StackPanel>
+            <Label Content="Stroke Color" />
+            <ComboBox SelectedItem="{Binding SelectedColor}" Margin="2,0,2,0" ItemsSource="{Binding ColorList}" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Fill="{Binding}" Height="15" Width="15"/>
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <prism:InvokeCommandAction Command="{Binding ColorSelectionChangedCmd}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+        </StackPanel>
+    </Grid>
+</UserControl>
